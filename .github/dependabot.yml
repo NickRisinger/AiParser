@@ -8,4 +8,11 @@ updates:
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: "weekly"
+      interval: "monthly"
+    allow:
+      # Allow both direct and indirect updates for all packages
+      - dependency-type: "all"
+    commit-message:
+      # Prefix all commit messages with "npm: "
+      prefix: "npm"
+      include: "scope"
