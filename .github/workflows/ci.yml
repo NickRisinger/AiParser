@@ -18,6 +18,8 @@ on:
       - '.idea/**'
       - '.vscode/**'
   pull_request:
+    branches:
+      - main
     paths-ignore:
       - '.github/**'
       - '!.github/workflows/ci.yml'
