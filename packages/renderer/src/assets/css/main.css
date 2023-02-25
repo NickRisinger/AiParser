@@ -1,10 +1,15 @@
 @import "./normalize.css";
+@import "element-plus/dist/index.css";
 @import "./fonts.css";
 
 body {
-  font-family: "Open Sans", "Times New Roman", "sans-serif";
+  font-family: 'Open Sans', sans-serif;
   font-size: 16px;
   font-weight: 400;
 
   height: 100vh;
 }
+
+/* .el-container > .el-main {
+  padding: 0;
+} */
