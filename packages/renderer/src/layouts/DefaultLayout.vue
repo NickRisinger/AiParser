@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <el-container>
     <slot />
-  </div>
+  </el-container>
 </template>
 
 <script setup lang="ts"></script>

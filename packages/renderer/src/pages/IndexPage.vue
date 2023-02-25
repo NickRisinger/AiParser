@@ -1,6 +1,7 @@
 <template>
   <div>
     <span>ksjdkcjksdjk</span>
+    <router-link to="/settings">Настройки</router-link>
   </div>
 </template>
 
