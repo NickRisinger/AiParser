@@ -3,6 +3,7 @@
     <el-button
       type="primary"
       :icon="ArrowLeft"
+      @click="router.back()"
     >
       Назад
     </el-button>
@@ -123,12 +124,15 @@
 <script setup lang="ts">
 import {reactive, ref, onMounted} from 'vue';
 import {storeToRefs} from 'pinia';
+import {useRouter} from 'vue-router';
 import {useTitle} from '@vueuse/core';
 import type {FormInstance, FormRules} from 'element-plus';
 import {ArrowLeft} from '@element-plus/icons-vue';
 import {useSettingsStore} from '/@/stores/settings';
 
 useTitle('Настройки');
+
+const router = useRouter();
 
 const settingsStore = useSettingsStore();
 const databaseFormRef = ref<FormInstance>();
