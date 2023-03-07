@@ -1,7 +1,7 @@
 {
   "name": "ai-parser",
   "description": "Application for parsing VKontakte and Instagram",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "author": {
     "email": "boozy044@gmail.com",
