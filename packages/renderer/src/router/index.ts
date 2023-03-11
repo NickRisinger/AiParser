@@ -5,7 +5,9 @@ import {loadLayoutMiddleware} from './middleware/loadLayout';
 enum RouteNamesEnum {
   index = 'index',
   settings = 'settings',
-  parser = 'parser',
+  parserVk = 'parserVk',
+  parserInst = 'parserInst',
+  info = 'info',
 }
 
 const router = createRouter({
@@ -28,9 +30,19 @@ const router = createRouter({
           component: () => import('../pages/SettingsPage.vue'),
         },
         {
-          path: 'parser',
-          name: RouteNamesEnum.parser,
-          component: () => import('../pages/ParserPage.vue'),
+          path: 'parserVk',
+          name: RouteNamesEnum.parserVk,
+          component: () => import('../pages/ParserVkPage.vue'),
+        },
+        {
+          path: 'parserInst',
+          name: RouteNamesEnum.parserInst,
+          component: () => import('../pages/ParserInstPage.vue'),
+        },
+        {
+          path: 'info',
+          name: RouteNamesEnum.info,
+          component: () => import('../pages/InfoPage.vue'),
         },
       ],
     },

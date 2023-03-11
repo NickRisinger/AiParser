@@ -7,6 +7,7 @@
     >
       Назад
     </el-button>
+    <el-divider />
     <el-form
       ref="databaseFormRef"
       :model="databaseSettings"
@@ -16,7 +17,6 @@
       status-icon
     >
       <el-form-item>
-        <el-divider />
         <h3>Настройки базы данных</h3>
       </el-form-item>
       <el-form-item
@@ -26,6 +26,15 @@
         <el-input
           v-model="databaseSettings.host"
           placeholder="Введите хост"
+        />
+      </el-form-item>
+      <el-form-item
+        label="Имя базы данных"
+        prop="name"
+      >
+        <el-input
+          v-model="databaseSettings.name"
+          placeholder="Введите имя базы данных"
         />
       </el-form-item>
       <el-form-item
@@ -130,7 +139,7 @@ import type {FormInstance, FormRules} from 'element-plus';
 import {ArrowLeft} from '@element-plus/icons-vue';
 import {useSettingsStore} from '/@/stores/settings';
 
-useTitle('Настройки');
+useTitle('Настройки | AiParser');
 
 const router = useRouter();
 
@@ -142,6 +151,7 @@ const {databaseSettings, parserVkSettings, malingSettings} = storeToRefs(setting
 
 const databaseFormRules = reactive<FormRules>({
   host: [{required: true, message: 'Пожалуйста введите хост', trigger: 'blur'}],
+  name: [{required: true, message: 'Пожалуйста введите имя базы данных', trigger: 'blur'}],
   port: [{required: true, message: 'Пожалуйста введите порт', trigger: 'blur'}],
   username: [{required: true, message: 'Пожалуйста введите имя пользователя', trigger: 'blur'}],
   password: [{required: true, message: 'Пожалуйста введите пароль', trigger: 'blur'}],

@@ -1,4 +1,4 @@
-import {app, BrowserWindow} from 'electron';
+import {app, BrowserWindow, Menu} from 'electron';
 import {join} from 'node:path';
 import {URL} from 'node:url';
 
@@ -27,6 +27,8 @@ async function createWindow() {
 
     if (import.meta.env.DEV) {
       browserWindow?.webContents.openDevTools();
+    } else {
+      Menu.setApplicationMenu(null);
     }
   });
 
