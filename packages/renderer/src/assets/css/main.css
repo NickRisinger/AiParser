@@ -3,7 +3,7 @@
 @import "./fonts.css";
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   font-weight: 400;
 
@@ -13,3 +13,18 @@ body {
 /* .el-container > .el-main {
   padding: 0;
 } */
+
+.el-row {
+  margin-bottom: 20px;
+}
+
+.el-card__body {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.el-card__body:hover > .el-icon {
+  color: var(--el-color-primary);
+}

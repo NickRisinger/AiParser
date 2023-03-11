@@ -7,13 +7,13 @@
     >
       Назад
     </el-button>
+    <el-divider />
     <el-form
       ref="parserFormRef"
       :model="parserForm"
       :rules="parserFormRules"
     >
       <el-form-item prop="groupId">
-        <el-divider />
         <el-input
           v-model="parserForm.groupId"
           type="number"
@@ -35,32 +35,54 @@
         </el-button>
       </el-form-item>
     </el-form>
-    <div>
-      <ul>
-        <li
-          v-for="item in parserVkStore.parsersTasks"
-          :key="item.groupId"
-        >
-          {{ item.groupId }} - {{ item.tableName }} - Ошибка 21642
-        </li>
-      </ul>
-    </div>
+    <el-divider />
+    <el-table
+      :data="parserVkStore.parsersTasks"
+      style="width: 100%"
+    >
+      <el-table-column
+        prop="date"
+        label="Дата"
+        :formatter="formatter"
+      />
+      <el-table-column
+        prop="groupId"
+        label="Id группы"
+      />
+      <el-table-column
+        prop="tableName"
+        label="Имя таблицы"
+      />
+      <el-table-column
+        prop="status"
+        label="Статус"
+      />
+      <template #empty>
+        <span>Нет данных</span>
+      </template>
+    </el-table>
   </el-main>
 </template>
 
 <script setup lang="ts">
 import {reactive, ref} from 'vue';
+import {storeToRefs} from 'pinia';
 import {useRouter} from 'vue-router';
 import {useTitle} from '@vueuse/core';
 import type {FormInstance, FormRules} from 'element-plus';
+import {ElMessageBox} from 'element-plus';
 import {ArrowLeft} from '@element-plus/icons-vue';
 import {useParserVkStore} from '/@/stores/parserVk';
+import {useSettingsStore} from '/@/stores/settings';
 
-useTitle('Парсер');
+useTitle('Парсер вконтакте | AiParser');
 
 const router = useRouter();
 
 const parserVkStore = useParserVkStore();
+const settingsStore = useSettingsStore();
+
+const {isFilled} = storeToRefs(settingsStore);
 
 const parserForm = ref({
   groupId: '',
@@ -77,13 +99,35 @@ const submitForm = async (parserFormRef: FormInstance | undefined) => {
   if (parserFormRef) {
     await parserFormRef.validate(async (valid, fields) => {
       if (valid) {
-        parserVkStore.addTaskParsing(Number(parserForm.value.groupId), parserForm.value.tableName);
-        parserFormRef.resetFields();
+        if (isFilled.value) {
+          parserVkStore.addTaskParsing(
+            Number(parserForm.value.groupId),
+            parserForm.value.tableName,
+          );
+          parserFormRef.resetFields();
+        } else {
+          ElMessageBox.confirm(
+            'Для того чтоб пользоваться парсером, нужно заполнить все поля в настройках!',
+            'Внимание!',
+            {
+              confirmButtonText: 'Ок',
+              cancelButtonText: 'Прейти к настройкам',
+              type: 'warning',
+            },
+          ).catch(() => {
+            router.push({name: 'settings'});
+          });
+        }
       } else {
         console.log('error submit!', fields);
       }
     });
   }
+};
+
+// eslint-disable-next-line no-undef
+const formatter = (row: IParsingTask) => {
+  return row.date.toLocaleString('ru');
 };
 </script>
 

@@ -1,10 +1,11 @@
-import {ref} from 'vue';
+import {ref, computed} from 'vue';
 import {defineStore} from 'pinia';
 import {useSettingsPromise} from '#preload';
 
 export const useSettingsStore = defineStore('counter', () => {
   const databaseSettings = ref({
     host: '',
+    name: '',
     port: '',
     username: '',
     password: '',
@@ -18,6 +19,16 @@ export const useSettingsStore = defineStore('counter', () => {
     token: '',
   });
 
+  const isFilled = computed(
+    () =>
+      databaseSettings.value.host != '' &&
+      databaseSettings.value.name != '' &&
+      databaseSettings.value.password != '' &&
+      databaseSettings.value.port != '' &&
+      databaseSettings.value.username != '' &&
+      parserVkSettings.value.token != '',
+  );
+
   const saveSettings = async () => {
     const store = await useSettingsPromise;
     store.set('database', JSON.parse(JSON.stringify(databaseSettings.value)));
@@ -29,6 +40,7 @@ export const useSettingsStore = defineStore('counter', () => {
     const store = await useSettingsPromise;
     databaseSettings.value = store.get('database') || {
       host: '',
+      name: '',
       port: '',
       username: '',
       password: '',
@@ -37,5 +49,5 @@ export const useSettingsStore = defineStore('counter', () => {
     malingSettings.value = store.get('maling') || {token: ''};
   };
 
-  return {databaseSettings, parserVkSettings, malingSettings, saveSettings, getSettings};
+  return {databaseSettings, parserVkSettings, malingSettings, saveSettings, getSettings, isFilled};
 });
